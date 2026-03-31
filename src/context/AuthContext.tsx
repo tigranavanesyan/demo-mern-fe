@@ -10,6 +10,8 @@ type User = {
     subscriptionStatus: string;
     subscriptionPriceId: string | null;
     currentPeriodEnd: string | null;
+    activePlanKey: "starter" | "pro" | "enterprise" | null;
+    activeInterval: "monthly" | "yearly" | null;
     credits: {
       included: number;
       used: number;

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { AppHeader } from "../components/AppHeader";
-import { createBillingPortal, fetchBillingStatus } from "../lib/billing";
+import { createBillingPortal, fetchBillingStatus, recordCreditUsage } from "../lib/billing";
 
 type BillingState = {
   billing: {
@@ -15,6 +15,13 @@ type BillingState = {
     amountTotal: number;
     currency: string;
     fulfilledAt?: string;
+  }>;
+  usageHistory: Array<{
+    _id: string;
+    quantity: number;
+    status: "pending" | "sent" | "failed";
+    sourceEventId: string;
+    createdAt: string;
   }>;
 };
 
@@ -44,6 +51,23 @@ export default function BillingPage() {
       window.location.href = result.url;
     } catch {
       setMessage("Could not open Stripe customer portal.");
+    }
+  };
+
+  const refreshData = async () => {
+    const result = await fetchBillingStatus();
+    setData(result);
+  };
+
+  const handleSpendCredits = async (quantity: number, label: string) => {
+    setMessage("");
+    try {
+      const sourceEventId = `fun-${quantity}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+      await recordCreditUsage(quantity, sourceEventId);
+      setMessage(`${label} complete. Spent ${quantity} credits.`);
+      await refreshData();
+    } catch {
+      setMessage("Could not spend credits. Make sure you have an active test subscription first.");
     }
   };
 
@@ -83,6 +107,32 @@ export default function BillingPage() {
           >
             Manage Subscription (Stripe Portal)
           </button>
+          <div className="mt-6 rounded-lg border border-slate-700 p-4">
+            <h2 className="text-lg font-medium text-indigo-200">Credit Playground</h2>
+            <p className="mt-2 text-sm text-slate-300">
+              Burn credits in fun ways to test usage billing.
+            </p>
+            <div className="mt-4 grid gap-3 sm:grid-cols-3">
+              <button
+                onClick={() => void handleSpendCredits(5, "Pixel rocket launch")}
+                className="rounded-md border border-slate-600 px-4 py-2 text-sm hover:bg-slate-800"
+              >
+                Launch pixel rocket (-5)
+              </button>
+              <button
+                onClick={() => void handleSpendCredits(25, "Meme generator overload")}
+                className="rounded-md border border-slate-600 px-4 py-2 text-sm hover:bg-slate-800"
+              >
+                Overload meme generator (-25)
+              </button>
+              <button
+                onClick={() => void handleSpendCredits(100, "AI dragon render")}
+                className="rounded-md border border-slate-600 px-4 py-2 text-sm hover:bg-slate-800"
+              >
+                Render AI dragon (-100)
+              </button>
+            </div>
+          </div>
           {message ? <p className="mt-3 text-sm text-rose-300">{message}</p> : null}
         </div>
 
@@ -98,6 +148,20 @@ export default function BillingPage() {
               ))
             ) : (
               <p>No purchases yet.</p>
+            )}
+          </div>
+        </div>
+        <div className="mt-6 rounded-xl border border-slate-800 bg-slate-900/70 p-6">
+          <h2 className="text-xl font-semibold">Credit Spending History</h2>
+          <div className="mt-3 space-y-2 text-sm text-slate-300">
+            {data?.usageHistory?.length ? (
+              data.usageHistory.map((entry) => (
+                <p key={entry._id}>
+                  -{entry.quantity} credits · {entry.status} · {new Date(entry.createdAt).toLocaleString()}
+                </p>
+              ))
+            ) : (
+              <p>No credit spending yet.</p>
             )}
           </div>
         </div>

@@ -32,3 +32,11 @@ export async function fetchBillingStatus() {
   const { data } = await api.get("/billing/status");
   return data;
 }
+
+export async function recordCreditUsage(quantity: number, sourceEventId: string) {
+  const { data } = await api.post("/billing/usage/record", {
+    quantity,
+    sourceEventId,
+  });
+  return data;
+}
