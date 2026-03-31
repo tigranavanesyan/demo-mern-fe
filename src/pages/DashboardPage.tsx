@@ -1,14 +1,35 @@
-﻿import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { AppHeader } from "../components/AppHeader";
 import { useAuth } from "../context/AuthContext";
 
 export default function DashboardPage() {
   const navigate = useNavigate();
-  const { user, logout } = useAuth();
+  const { user, logout, updateRole } = useAuth();
+  const [roleMessage, setRoleMessage] = useState("");
+  const [isUpdatingRole, setIsUpdatingRole] = useState(false);
 
   const handleLogout = async () => {
     await logout();
     navigate("/");
+  };
+
+  const handleRoleChange = async (nextRole: "user" | "admin") => {
+    if (!user || user.role === nextRole) {
+      return;
+    }
+
+    setRoleMessage("");
+    setIsUpdatingRole(true);
+
+    try {
+      await updateRole(nextRole);
+      setRoleMessage(`Role updated to ${nextRole}.`);
+    } catch {
+      setRoleMessage("Could not update role right now.");
+    } finally {
+      setIsUpdatingRole(false);
+    }
   };
 
   return (
@@ -28,6 +49,23 @@ export default function DashboardPage() {
                 This authenticated dashboard verifies secure login state, exposes role-aware
                 navigation, and summarizes key architecture ideas used in this MERN project.
               </p>
+              <div className="mt-5 flex flex-wrap items-center gap-2">
+                <button
+                  onClick={() => void handleRoleChange("user")}
+                  disabled={isUpdatingRole || user?.role === "user"}
+                  className="rounded-md border border-slate-700 px-3 py-1.5 text-xs font-medium text-slate-200 hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  Become User
+                </button>
+                <button
+                  onClick={() => void handleRoleChange("admin")}
+                  disabled={isUpdatingRole || user?.role === "admin"}
+                  className="rounded-md border border-indigo-500 px-3 py-1.5 text-xs font-medium text-indigo-200 hover:bg-indigo-500/20 disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  Become Admin
+                </button>
+              </div>
+              {roleMessage ? <p className="mt-3 text-sm text-emerald-300">{roleMessage}</p> : null}
             </div>
             <button
               onClick={handleLogout}

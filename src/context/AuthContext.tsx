@@ -15,6 +15,7 @@ type AuthContextValue = {
   login: (email: string, password: string) => Promise<void>;
   register: (name: string, email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
+  updateRole: (role: "user" | "admin") => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
@@ -58,6 +59,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       logout: async () => {
         await api.post("/auth/logout");
         setUser(null);
+      },
+      updateRole: async (role) => {
+        const { data } = await api.patch("/auth/role", { role });
+        setUser(data.user);
       },
     }),
     [isLoading, user]
