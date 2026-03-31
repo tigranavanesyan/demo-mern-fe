@@ -6,6 +6,16 @@ type User = {
   name: string;
   email: string;
   role: "user" | "admin";
+  billing?: {
+    subscriptionStatus: string;
+    subscriptionPriceId: string | null;
+    currentPeriodEnd: string | null;
+    credits: {
+      included: number;
+      used: number;
+      remaining: number;
+    };
+  };
 };
 
 type AuthContextValue = {

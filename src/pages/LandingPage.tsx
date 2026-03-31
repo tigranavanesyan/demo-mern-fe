@@ -50,6 +50,12 @@ export default function LandingPage() {
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
+              to="/pricing"
+              className="rounded-md border border-indigo-400 px-5 py-2.5 text-sm font-medium text-indigo-200 hover:bg-indigo-500/20"
+            >
+              View Pricing
+            </Link>
+            <Link
               to="/public"
               className="rounded-md border border-slate-700 px-5 py-2.5 text-sm font-medium text-slate-200 hover:bg-slate-900"
             >

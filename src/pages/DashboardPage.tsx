@@ -45,6 +45,9 @@ export default function DashboardPage() {
               <h1 className="text-3xl font-semibold">Welcome, {user?.name}</h1>
               <p className="mt-1 text-slate-300">{user?.email}</p>
               <p className="mt-1 text-xs uppercase tracking-wide text-indigo-300">Role: {user?.role}</p>
+              <p className="mt-1 text-xs uppercase tracking-wide text-emerald-300">
+                Plan: {user?.billing?.subscriptionStatus ?? "inactive"}
+              </p>
               <p className="mt-4 max-w-3xl text-slate-300">
                 This authenticated dashboard verifies secure login state, exposes role-aware
                 navigation, and summarizes key architecture ideas used in this MERN project.
@@ -82,6 +85,18 @@ export default function DashboardPage() {
             >
               Open Public Page
             </Link>
+              <Link
+                to="/pricing"
+                className="rounded-md border border-indigo-500 px-4 py-2 text-sm font-medium text-indigo-200 hover:bg-indigo-500/20"
+              >
+                View Pricing
+              </Link>
+              <Link
+                to="/billing"
+                className="rounded-md border border-emerald-500 px-4 py-2 text-sm font-medium text-emerald-200 hover:bg-emerald-500/20"
+              >
+                Open Billing
+              </Link>
             {user?.role === "admin" && (
               <Link
                 to="/admin"

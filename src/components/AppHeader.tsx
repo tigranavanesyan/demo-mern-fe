@@ -13,8 +13,10 @@ export function AppHeader() {
 
   const navItems: NavItem[] = [
     { label: "Landing", to: "/", canAccess: true },
+    { label: "Pricing", to: "/pricing", canAccess: true },
     { label: "Public", to: "/public", canAccess: true },
     { label: "Dashboard", to: "/dashboard", canAccess: isAuthenticated },
+    { label: "Billing", to: "/billing", canAccess: isAuthenticated },
     {
       label: "Admin",
       to: "/admin",
