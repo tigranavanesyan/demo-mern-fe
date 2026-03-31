@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 export default function DashboardPage() {
@@ -20,6 +20,9 @@ export default function DashboardPage() {
               {user?.name}
             </h1>
             <p className="text-sm text-slate-500">{user?.email}</p>
+            <p className="text-xs uppercase tracking-wide text-indigo-600">
+              Role: {user?.role}
+            </p>
           </div>
           <button
             onClick={handleLogout}
@@ -28,6 +31,23 @@ export default function DashboardPage() {
             Logout
           </button>
         </header>
+
+        <section className="mt-6 flex flex-wrap gap-3">
+          <Link
+            to="/public"
+            className="rounded-md border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-200"
+          >
+            Open Public Page
+          </Link>
+          {user?.role === "admin" && (
+            <Link
+              to="/admin"
+              className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800"
+            >
+              Open Admin Page
+            </Link>
+          )}
+        </section>
 
         <section className="mt-8 grid gap-4 sm:grid-cols-3">
           {[

@@ -86,6 +86,12 @@ export default function RegisterPage() {
             Login
           </Link>
         </p>
+        <Link
+          to="/"
+          className="mt-3 block text-sm font-medium text-slate-600 hover:underline"
+        >
+          Back to landing page
+        </Link>
       </form>
     </main>
   );

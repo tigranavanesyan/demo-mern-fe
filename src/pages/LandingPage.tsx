@@ -1,12 +1,8 @@
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 export default function LandingPage() {
   const { isAuthenticated } = useAuth();
-
-  if (isAuthenticated) {
-    return <Navigate to="/dashboard" replace />;
-  }
 
   return (
     <main className="min-h-screen bg-slate-950 text-white">
@@ -23,17 +19,34 @@ export default function LandingPage() {
         </p>
         <div className="mt-10 flex gap-3">
           <Link
-            to="/register"
-            className="rounded-md bg-indigo-500 px-5 py-2.5 text-sm font-medium hover:bg-indigo-400"
-          >
-            Get Started
-          </Link>
-          <Link
-            to="/login"
+            to="/public"
             className="rounded-md border border-slate-700 px-5 py-2.5 text-sm font-medium text-slate-200 hover:bg-slate-900"
           >
-            Login
+            Public Page
           </Link>
+          {isAuthenticated ? (
+            <Link
+              to="/dashboard"
+              className="rounded-md bg-indigo-500 px-5 py-2.5 text-sm font-medium hover:bg-indigo-400"
+            >
+              Go to Dashboard
+            </Link>
+          ) : (
+            <>
+              <Link
+                to="/register"
+                className="rounded-md bg-indigo-500 px-5 py-2.5 text-sm font-medium hover:bg-indigo-400"
+              >
+                Get Started
+              </Link>
+              <Link
+                to="/login"
+                className="rounded-md border border-slate-700 px-5 py-2.5 text-sm font-medium text-slate-200 hover:bg-slate-900"
+              >
+                Login
+              </Link>
+            </>
+          )}
         </div>
       </section>
     </main>
