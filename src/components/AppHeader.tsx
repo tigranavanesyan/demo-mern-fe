@@ -25,8 +25,12 @@ export function AppHeader() {
   ];
 
   return (
-    <header className="border-b border-slate-200 bg-white/95 px-4 py-3 shadow-sm backdrop-blur">
-      <nav className="mx-auto flex max-w-6xl flex-wrap items-center gap-2">
+    <header className="sticky top-0 z-20 border-b border-slate-800 bg-slate-950/90 px-4 py-3 text-slate-100 shadow-lg backdrop-blur">
+      <nav className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3">
+        <Link to="/" className="text-sm font-semibold tracking-wide text-indigo-300">
+          MERN Auth Portfolio
+        </Link>
+        <div className="flex flex-wrap items-center gap-2">
         {navItems.map((item) => {
           const isActive = location.pathname === item.to;
 
@@ -34,7 +38,7 @@ export function AppHeader() {
             return (
               <span
                 key={item.to}
-                className="cursor-not-allowed rounded-md border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-400"
+                className="cursor-not-allowed rounded-md border border-slate-700 px-3 py-1.5 text-sm font-medium text-slate-500"
                 title="You do not have access to this page"
               >
                 {item.label}
@@ -48,14 +52,15 @@ export function AppHeader() {
               to={item.to}
               className={`rounded-md border px-3 py-1.5 text-sm font-medium transition ${
                 isActive
-                  ? "border-indigo-600 bg-indigo-50 text-indigo-700"
-                  : "border-slate-300 text-slate-700 hover:bg-slate-100"
+                  ? "border-indigo-400 bg-indigo-500/20 text-indigo-200"
+                  : "border-slate-700 text-slate-200 hover:bg-slate-800"
               }`}
             >
               {item.label}
             </Link>
           );
         })}
+        </div>
       </nav>
     </header>
   );
