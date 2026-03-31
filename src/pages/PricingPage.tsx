@@ -54,7 +54,9 @@ export default function PricingPage() {
         <div className="mb-8 flex flex-wrap items-center justify-between gap-3">
           <div>
             <h1 className="text-3xl font-semibold">Pricing</h1>
-            <p className="mt-2 text-slate-300">Subscriptions with prorated upgrades and metered credit overage.</p>
+            <p className="mt-2 text-slate-300">
+              Subscriptions with prorated upgrades when you change plans, and metered billing if you go past your included credits.
+            </p>
           </div>
           <div className="flex items-center gap-2 rounded-lg border border-slate-700 p-1">
             <button
@@ -71,6 +73,32 @@ export default function PricingPage() {
             </button>
           </div>
         </div>
+
+        <section
+          aria-labelledby="how-it-works-heading"
+          className="mb-10 rounded-xl border border-slate-800 bg-slate-900/50 p-6"
+        >
+          <h2 id="how-it-works-heading" className="text-lg font-semibold text-indigo-200">
+            How it works
+          </h2>
+          <ol className="mt-4 list-decimal space-y-3 pl-5 text-slate-300 marker:text-indigo-400">
+            <li>
+              <span className="font-medium text-slate-200">Pick billing and a plan.</span> Choose monthly or yearly, then select Starter, Pro, or Enterprise. Each plan includes a set number of credits per billing period.
+            </li>
+            <li>
+              <span className="font-medium text-slate-200">Pay securely with Stripe.</span> For a new subscription you are sent to Stripe Checkout to enter payment details. You can apply a promotion code on checkout when available.
+            </li>
+            <li>
+              <span className="font-medium text-slate-200">Already subscribed?</span> If you switch to another plan while logged in, your subscription updates right away. Stripe issues a prorated invoice for the difference so you only pay for what you use in the current period.
+            </li>
+            <li>
+              <span className="font-medium text-slate-200">Credits and overage.</span> Your included credits reset each billing cycle. Usage beyond that is charged as metered overage according to your plan.
+            </li>
+            <li>
+              <span className="font-medium text-slate-200">One-time add-ons.</span> The Premium Template is a separate one-time purchase through checkout. It is not part of your subscription and does not renew.
+            </li>
+          </ol>
+        </section>
 
         <div className="grid gap-4 md:grid-cols-3">
           {plans.map((plan) => (
