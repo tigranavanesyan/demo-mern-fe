@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
+import { AppHeader } from "../components/AppHeader";
 import { useAuth } from "../context/AuthContext";
 
 export default function DashboardPage() {
@@ -11,8 +12,9 @@ export default function DashboardPage() {
   };
 
   return (
-    <main className="min-h-screen bg-slate-100 px-6 py-10">
-      <div className="mx-auto max-w-5xl">
+    <main className="min-h-screen bg-slate-100">
+      <AppHeader />
+      <div className="mx-auto max-w-5xl px-6 py-10">
         <header className="flex items-center justify-between">
           <div>
             <p className="text-sm text-slate-500">Logged in as</p>

@@ -1,12 +1,15 @@
 import { Link } from "react-router-dom";
+import { AppHeader } from "../components/AppHeader";
 import { useAuth } from "../context/AuthContext";
 
 export default function PublicPage() {
   const { isAuthenticated, user } = useAuth();
 
   return (
-    <main className="min-h-screen bg-slate-100 px-6 py-10">
-      <div className="mx-auto max-w-3xl rounded-xl bg-white p-8 shadow-sm">
+    <main className="min-h-screen bg-slate-100">
+      <AppHeader />
+      <div className="mx-auto max-w-3xl px-6 py-10">
+        <div className="rounded-xl bg-white p-8 shadow-sm">
         <p className="text-sm text-slate-500">Public page</p>
         <h1 className="mt-2 text-3xl font-semibold text-slate-900">
           Visible for all users
@@ -38,6 +41,7 @@ export default function PublicPage() {
               Back to dashboard ({user?.role})
             </Link>
           )}
+        </div>
         </div>
       </div>
     </main>

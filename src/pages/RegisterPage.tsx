@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { AppHeader } from "../components/AppHeader";
 import { useAuth } from "../context/AuthContext";
 
 export default function RegisterPage() {
@@ -28,10 +29,11 @@ export default function RegisterPage() {
   };
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-slate-100 px-4">
+    <main className="flex min-h-screen flex-col bg-slate-100">
+      <AppHeader />
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-md rounded-lg bg-white p-8 shadow-sm"
+        className="mx-auto my-auto w-full max-w-md rounded-lg bg-white p-8 shadow-sm"
       >
         <h1 className="text-2xl font-semibold text-slate-900">Register</h1>
         <p className="mt-1 text-sm text-slate-500">Create your account.</p>

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { AppHeader } from "../components/AppHeader";
 import { useAuth } from "../context/AuthContext";
 
 export default function LandingPage() {
@@ -6,6 +7,7 @@ export default function LandingPage() {
 
   return (
     <main className="min-h-screen bg-slate-950 text-white">
+      <AppHeader />
       <section className="mx-auto flex max-w-5xl flex-col items-center px-6 py-24 text-center">
         <p className="rounded-full border border-slate-700 px-3 py-1 text-xs text-slate-300">
           MERN Portfolio Project
