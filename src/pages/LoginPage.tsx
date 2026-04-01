@@ -1,4 +1,5 @@
-﻿import { useState } from "react";
+import { useState } from "react";
+import { GoogleLogin } from "@react-oauth/google";
 import type { FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AppHeader } from "../components/AppHeader";
@@ -6,7 +7,8 @@ import { useAuth } from "../context/AuthContext";
 
 export default function LoginPage() {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, loginWithGoogle } = useAuth();
+  const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID ?? "";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -22,6 +24,19 @@ export default function LoginPage() {
       navigate("/dashboard");
     } catch {
       setError("Invalid email or password.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleGoogleSuccess = async (credential: string) => {
+    setError("");
+    setIsSubmitting(true);
+    try {
+      await loginWithGoogle(credential);
+      navigate("/dashboard");
+    } catch {
+      setError("Google login failed. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -85,6 +100,29 @@ export default function LoginPage() {
           >
             {isSubmitting ? "Logging in..." : "Login"}
           </button>
+
+          {googleClientId ? (
+            <div className="mt-4">
+              <p className="mb-2 text-center text-xs uppercase tracking-wide text-slate-400">
+                or continue with
+              </p>
+              <div className="flex justify-center">
+                <GoogleLogin
+                  onSuccess={(credentialResponse) => {
+                    if (credentialResponse.credential) {
+                      void handleGoogleSuccess(credentialResponse.credential);
+                      return;
+                    }
+                    setError("Google login did not return a credential.");
+                  }}
+                  onError={() => {
+                    setError("Google login failed. Please try again.");
+                  }}
+                  useOneTap={false}
+                />
+              </div>
+            </div>
+          ) : null}
 
           <p className="mt-4 text-sm text-slate-300">
             No account?{" "}

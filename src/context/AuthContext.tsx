@@ -25,6 +25,7 @@ type AuthContextValue = {
   isLoading: boolean;
   isAuthenticated: boolean;
   login: (email: string, password: string) => Promise<void>;
+  loginWithGoogle: (credential: string) => Promise<void>;
   register: (name: string, email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   updateRole: (role: "user" | "admin") => Promise<void>;
@@ -58,6 +59,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       isAuthenticated: Boolean(user),
       login: async (email, password) => {
         const { data } = await api.post("/auth/login", { email, password });
+        setUser(data.user);
+      },
+      loginWithGoogle: async (credential) => {
+        const { data } = await api.post("/auth/google", { credential });
         setUser(data.user);
       },
       register: async (name, email, password) => {
