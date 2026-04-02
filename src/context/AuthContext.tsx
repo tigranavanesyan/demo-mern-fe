@@ -29,6 +29,8 @@ type AuthContextValue = {
   register: (name: string, email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   updateRole: (role: "user" | "admin") => Promise<void>;
+  /** Re-fetch profile from `/auth/me` (e.g. after credits or billing change). */
+  refreshUser: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
@@ -80,6 +82,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       updateRole: async (role) => {
         const { data } = await api.patch("/auth/role", { role });
         setUser(data.user);
+      },
+      refreshUser: async () => {
+        try {
+          const { data } = await api.get("/auth/me");
+          setUser(data.user);
+        } catch {
+          setUser(null);
+        }
       },
     }),
     [isLoading, user]

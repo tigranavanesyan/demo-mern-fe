@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { AppHeader } from "../components/AppHeader";
+import { useAuth } from "../context/AuthContext";
 import { createBillingPortal, fetchBillingStatus, recordCreditUsage } from "../lib/billing";
 
 type BillingState = {
@@ -26,6 +27,7 @@ type BillingState = {
 };
 
 export default function BillingPage() {
+  const { refreshUser } = useAuth();
   const [data, setData] = useState<BillingState | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [message, setMessage] = useState("");
@@ -65,7 +67,7 @@ export default function BillingPage() {
       const sourceEventId = `fun-${quantity}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
       await recordCreditUsage(quantity, sourceEventId);
       setMessage(`${label} complete. Spent ${quantity} credits.`);
-      await refreshData();
+      await Promise.all([refreshData(), refreshUser()]);
     } catch {
       setMessage("Could not spend credits. Make sure you have an active test subscription first.");
     }
