@@ -88,7 +88,44 @@ export default function BillingPage() {
       <section className="mx-auto max-w-5xl px-6 py-12">
         <div className="rounded-xl border border-slate-800 bg-slate-900/70 p-6">
           <h1 className="text-2xl font-semibold">Billing</h1>
-          <p className="mt-2 text-slate-300">
+          <div
+            className="mt-4 rounded-lg border border-indigo-500/35 bg-indigo-950/30 p-4"
+            aria-labelledby="stripe-features-heading"
+          >
+            <h2 id="stripe-features-heading" className="text-sm font-semibold text-indigo-200">
+              Payments powered by Stripe
+            </h2>
+            <p className="mt-2 text-sm text-slate-300">
+              This app uses Stripe for billing. Here is what is wired up for you:
+            </p>
+            <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-slate-300 marker:text-indigo-400">
+              <li>
+                <span className="font-medium text-slate-200">Checkout</span> — New subscriptions (Starter, Pro,
+                Enterprise, monthly or yearly) and the one-time Premium Template purchase go through Stripe Checkout.
+              </li>
+              <li>
+                <span className="font-medium text-slate-200">Customer Portal</span> — The button below opens
+                Stripe&apos;s hosted page where you can update payment methods, download invoices, or cancel your
+                subscription.
+              </li>
+              <li>
+                <span className="font-medium text-slate-200">Plan changes</span> — If you change plan or switch between
+                monthly and yearly billing while logged in, Stripe updates your subscription and applies prorated
+                charges where applicable.
+              </li>
+              <li>
+                <span className="font-medium text-slate-200">Credits &amp; usage</span> — Included credits are tracked
+                here; usage you trigger in the Credit Playground is reported for metered overage billing (beyond your
+                included amount), consistent with your plan in Stripe.
+              </li>
+              <li>
+                <span className="font-medium text-slate-200">Automatic sync</span> — After checkout and when your
+                subscription renews or changes, the app updates your status and purchase history from Stripe so what you
+                see here matches your Stripe account.
+              </li>
+            </ul>
+          </div>
+          <p className="mt-6 text-slate-300">
             Status: <span className="uppercase text-indigo-300">{data?.billing.subscriptionStatus ?? "inactive"}</span>
           </p>
           <p className="mt-1 text-slate-300">Price ID: {data?.billing.subscriptionPriceId ?? "None"}</p>

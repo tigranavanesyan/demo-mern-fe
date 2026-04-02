@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { AppHeader } from "../components/AppHeader";
 import { useAuth } from "../context/AuthContext";
 import {
@@ -100,6 +101,14 @@ export default function PricingPage() {
             <h1 className="text-3xl font-semibold">Pricing</h1>
             <p className="mt-2 text-slate-300">
               Subscriptions with prorated upgrades when you change plans, and metered billing if you go past your included credits.
+            </p>
+            <p className="mt-3 text-sm text-slate-400">
+              Stripe handles checkout, the customer portal for managing payment methods and invoices, prorated plan
+              changes, usage-based credit overage, and keeping your subscription state in sync. See the{" "}
+              <Link to="/billing" className="text-indigo-300 underline underline-offset-2 hover:text-indigo-200">
+                Billing
+              </Link>{" "}
+              page for a full list of what is implemented.
             </p>
           </div>
           <div className="flex items-center gap-2 rounded-lg border border-slate-700 p-1">

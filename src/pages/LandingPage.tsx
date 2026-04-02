@@ -29,6 +29,11 @@ export default function LandingPage() {
       name: "Vercel Deployment",
       description: "Delivers the frontend quickly with simple CI/CD and production hosting.",
     },
+    {
+      name: "Stripe",
+      description:
+        "Checkout for subscriptions and one-time purchases, hosted customer portal, prorated plan changes, metered credit usage with webhooks to keep billing state in sync.",
+    },
   ];
 
   return (
